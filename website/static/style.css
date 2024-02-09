@@ -98,6 +98,6 @@ tr:nth-child(even) {
 .snap{
   background-color:lightsalmon;
 }
-.edit + body{
-  background-color: aquamarine;
+.edit{
+  background-color: rgb(195, 15, 177) !important;
 }

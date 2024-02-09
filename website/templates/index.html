@@ -46,18 +46,20 @@
         <td>Task Number {{todo.id}}  :{{todo.task}}  </td>
         <td>{{todo.date_created.strftime('%Y-%m-%d')}}</td>
         {% if todo.complete == False %}
-        <td class="snap">Task Incomplete.<a href = "/update/{{todo.id}}"><button type="submit">Mark As comeplete</button></a></td>
+        <td class="snap">Task Incomplete.<a href = "/update/{{todo.id}}"><button class="complete">Mark As comeplete</button></a></td>
         {% else %}
-        <td class="complete"> Task Complete<a href = "/update/{{todo.id}}"><button type="submit">Mark As incomeplete</button></a></td>
+        <td class="complete"> Task Complete<a href = "/update/{{todo.id}}"><button class="snap" type="submit">Mark As incomeplete</button></a></td>
         {% endif %}
         <td>
-            <!-- Add a dropdown or radio buttons for priority -->
+            <form action="/update_priority/{{todo.id}}" method="post">
             <select name="priority" id="priority-{{ todo.id }}">
-                <option class= high value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-                <option value="low">Done</option>
+                <option class= high value="high"{% if todo.priority=="high" %}selected {% endif %}>High</option>
+                <option value="medium"{% if todo.priority=="medium" %} selected {% endif %}>Medium</option>
+                <option value="low"{% if todo.priority =="low"%} selected {% endif %}>Low</option>
+                <option value="done"{% if todo.priority == "done"%} selected {% endif %}>Done</option>
             </select>
+            <button type="submit">Priority</button>
+        </form>
     <td><a href="/edit/{{todo.id}}"> <button type="submit">Edit Task</button></a></td>
     <td class="delete"><a href="/delete/{{todo.id}}"><button type="submit">Delete Task</button></a></td>
     

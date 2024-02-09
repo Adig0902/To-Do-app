@@ -46,11 +46,11 @@ def edit(todo_id):
         return redirect(url_for("my_view.home"))
     return render_template('edit.html',todo=todo)
 
-@my_view.route('/update_priority/<int:todo_id>', methods=['POST'])
+@my_view.route('/update_priority/<int:todo_id>', methods=['GET','POST'])
 def update_priority(todo_id):
     todo = Todo.query.get(todo_id)
     new_priority = request.form.get('priority')  # Get the selected priority from the form
     # Update the priority in the database
     todo.priority = new_priority
     db.session.commit()
-    return redirect(url_for('index'))  # Redirect back to the main page
+    return redirect(url_for("my_view.home"))  # Redirect back to the main page
