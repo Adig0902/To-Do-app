@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css')}}">
+    
+</head>
+
+<body class="index">
+    
+        <h1>WANT TO BE EFFICIENT? GET STARTED WITH TO_DO CHECKLIST</h1><br>
+        <h2>Plan,manage and track all your tasks. Organize your to-do list your way</h2>
+        
+        <form action="/add" method="post">
+            <img src="{{ url_for('static', filename='checklist.webp') }}" alt="User Image"class="left-image"style="width:200px;height: 175px;"><br>
+            <img src="{{ url_for('static', filename='checklist.webp') }}" alt="User Image"class="right-image"style="width:200px;height: 175px;"><br>
+            <div>
+                <label>Todo task</label>
+                <input type="text" name="task" placeholder="Enter a Task">
+                <button type="submit">Add a Task</button>
+            </div>
+
+        </form>
+        <div class="error">
+        {% if message %}
+        {{ message }}
+        {% endif %}
+        <hr>
+    </div>
+    <table>
+        <tr>
+            <th>List Of Tasks</th>
+            <th>Date Assigned</th>
+            <th>Complete</th>
+            <th>Priority</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            
+        </tr>
+    {% for todo in todo_list %}
+    <tr>
+    <div1>
+        <td>Task Number {{todo.id}}  :{{todo.task}}  </td>
+        <td>{{todo.date_created.strftime('%Y-%m-%d')}}</td>
+        {% if todo.complete == False %}
+        <td class="snap">Task Incomplete.<a href = "/update/{{todo.id}}"><button type="submit">Mark As comeplete</button></a></td>
+        {% else %}
+        <td class="complete"> Task Complete<a href = "/update/{{todo.id}}"><button type="submit">Mark As incomeplete</button></a></td>
+        {% endif %}
+        <td>
+            <!-- Add a dropdown or radio buttons for priority -->
+            <select name="priority" id="priority-{{ todo.id }}">
+                <option class= high value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+                <option value="low">Done</option>
+            </select>
+    <td><a href="/edit/{{todo.id}}"> <button type="submit">Edit Task</button></a></td>
+    <td class="delete"><a href="/delete/{{todo.id}}"><button type="submit">Delete Task</button></a></td>
+    
+</tr>
+    {% endfor %}
+</table>
+    <hr>
+</div1>
+
+    
+</body>
+
+</html>
