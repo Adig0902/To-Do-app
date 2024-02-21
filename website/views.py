@@ -5,6 +5,8 @@ from . import db
 
 my_view = Blueprint("my_view", __name__)
 
+
+
 @my_view.route("/")
 def home():
     todo_list = Todo.query.all()
@@ -54,3 +56,17 @@ def update_priority(todo_id):
     todo.priority = new_priority
     db.session.commit()
     return redirect(url_for("my_view.home"))  # Redirect back to the main page
+
+# @my_view.route('/tasks')
+# def view_tasks():
+#     tasks = Todo.query.order_by('priority').all()
+#     return render_template("index.html", tasks=tasks)
+@my_view.route('/tasks/<priority>')
+def view_tasks(priority):
+    # Get the tasks based on the priority
+    if priority == "all":
+        tasks = Todo.query.all()
+    else:
+        tasks = Todo.query.filter_by(priority=priority).all()
+    # Render the tasks_partial.html template with the tasks and the priority
+    return render_template('index.html', todo_list=tasks, priority=priority)
